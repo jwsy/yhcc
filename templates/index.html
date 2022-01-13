@@ -1,11 +1,19 @@
 <link rel="stylesheet" href="https://unpkg.com/blocks.css/dist/blocks.min.css" />
 
-<h1>Welcome to the To the django app </h1>
+<h1>Welcome to the Dylan's emporium of stars ⭐️ and gates ⛩</h1>
 <h3>To test me out, open me in a new tab. </h3>
 
 <ul> 
   {% for todo_item in all_items %}
-    <li>{{ todo_item.content }}, {{todo_item.owner}}
+    <li>
+      <input class="publication-tag__checkbox"
+        {% if todo_item.done %}checked="checked"{% endif %}
+        type="checkbox" 
+        name="{{ todo_item.content }}"
+        value="{{ todo_item.done }}">
+      {{ todo_item.content }} 
+      | <i>{{todo_item.owner}}</i> 
+      | ({{ todo_item.updated_at | date:"Y-d-m:Hi" }})
     <form action="/deleteTodo/{{todo_item.id}}/" 
     style="display: inline;"
     method="post">{% csrf_token %}
