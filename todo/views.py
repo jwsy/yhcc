@@ -25,6 +25,12 @@ def deleteTodo(request, todo_id):
   item_to_delete.delete()
   return HttpResponseRedirect('/')
 
+def doneTodo(request, todo_id):
+  item_to_done = TodoItem.objects.get(id=todo_id)
+  item_to_done.done = not item_to_done.done
+  item_to_done.save()
+  return HttpResponseRedirect('/')
+
 
 def coverImage(request):
     image_data = open("./todo/app.png", "rb").read()

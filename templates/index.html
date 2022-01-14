@@ -6,6 +6,12 @@
 <ul> 
   {% for todo_item in all_items %}
     <li>
+      <form action="/doneTodo/{{todo_item.id}}/" 
+        style="display: inline;"
+        method="post">{% csrf_token %}
+      
+        <input type="submit" value="Mark as Done"/>
+      </form>
       <input class="publication-tag__checkbox"
         {% if todo_item.done %}checked="checked"{% endif %}
         type="checkbox" 
@@ -17,6 +23,7 @@
     <form action="/deleteTodo/{{todo_item.id}}/" 
     style="display: inline;"
     method="post">{% csrf_token %}
+    
       <input type="submit" value="Delete"/>
     </form>
     </li>
