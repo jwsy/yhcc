@@ -1,10 +1,7 @@
-# Developing Counter Cody on Repl.it
+# Developing Django on Repl.it
+
 - Fork this template to get started
-- Delete `todo/migrations` and `db.sqlite3`
-- Hit run at the top to start the server to run the command in `.replit` which is `python manage.py makemigrations && python manage.py migrate --run-syncdb && python manage.py runserver 0.0.0.0:3000`
-- Enter the Shell in the bottom right and reload data with this command: `python manage.py loaddata db.json`
-  - The backup `db.json` was created with this command: `python manage.py dumpdata --exclude auth.permission --exclude contenttypes > db.json`
-  - **BE SURE TO DELETE THIS FILE WHEN YOU GO TO PRODUCTION**
+- Simply hit run to start the server
 - The server will autoreload as needed. You don't need to restart the server manually.
 
 ## Add your first view
