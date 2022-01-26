@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import TodoItem, Client, Activity
+from .models import TodoItem, Client, Activity, RandomGiphy
+from .forms import ActivityForm
 
 @admin.register(TodoItem)
 class TodoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'client', 'activity', 'done', 'created_at', 'updated_at')
+    list_display = ('id', 'client', 'activity', 'done', 'updated_at')
     list_filter = ('client', 'done', 'updated_at')
 
 # Register your models here.
@@ -15,13 +16,9 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'youtube_url')
+    form = ActivityForm
+    list_display = ('name', 'description', 'youtube_url', 'color')
 
-# class Activities(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     name = models.TextField()
-#     description = models.TextField(blank=True)
-#     youtube_url = models.TextField(blank=True)
-
-#     def __str__(self):
-#         return self.namV
+@admin.register(RandomGiphy)
+class RandomGiphyAdmin(admin.ModelAdmin):
+    list_display = ('description', 'url')

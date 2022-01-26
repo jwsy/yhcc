@@ -10,104 +10,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-  <title>yhcc</title>
+  <title>Counter Cody</title>
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand b mb-0 h2" href="#">Counter Cody</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="/">
-            Home
-            <i class="bi bi-house-fill"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link inactive" href="/stream">
-            Stream
-            <i class="bi bi-file-earmark-bar-graph"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link inactive" data-bs-toggle="modal" data-bs-target="#aboutModal" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Stats</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown active">
-          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">
-            Client: 
-            {{ selected_client.display_name }}
-            <i class="bi bi-heart"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            {% for client in clients %}
-            <li><a 
-              class="dropdown-item inactive" 
-              href="/selectClient/{{ client.id }}"
-              >{{ client.display_name }} {{ client.id }}
-            </a></li>
-            {% endfor %}
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/selectClient/0">Default</a></li>
-          </ul>
-        </li>
-
-        {% if user.is_authenticated %}
-        <li class="nav-item dropdown active">
-          <a class="nav-link dropdown-toggle active b" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">
-            Adult:
-            {{user.username}}
-            <i class="bi bi-person-badge"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li class="nav-item me-2">
-              <a class="nav-link" href="#">
-                Edit {{user.username}} <i class="bi bi-person-circle"></i>
-              </a>
-            </li>
-      
-            <li class="nav-item me-2">
-              <a class="btn btn-outline-secondary" href="/logout">Logout</a>
-            </li>
-          </ul>
-        </li>
-        {% else %}
-  
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-  
-        {% endif %}
-      </ul>
-
-      <button type="button" class="btn btn-outline-info m-2" data-bs-toggle="modal" data-bs-target="#createActivityModal">
-        Create Activity Type
-      </button>
-
-
-      <!-- <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form> -->
-    </div>
-  </div>
-</nav>
-<!-- END nav -->
+{% include "nav.html" %}
 
 <div class="container m-2 p-2 bg-white">
   <h4>Add New Activity for {{ selected_client.display_name }}</h5>
-  <button type="button" class="btn btn-outline-info mb-2" data-bs-toggle="modal" data-bs-target="#createActivityModal">
-    Create Activity Type
-  </button>
 
   {% for activity in all_activities %}
     <!-- Attempt activity again -->
@@ -116,9 +26,16 @@
       method="post">{% csrf_token %}
       <input type="hidden" name="client_id" value="{{ selected_client.id }}" />
       <input type="hidden" name="activity_id" value="{{ activity.id }}" />
-      <input class="btn btn-info mb-2" type="submit" value="Attempt {{ activity }}"/>
+      <input class="btn mb-2" 
+        type="submit" 
+        style="background-color: {{ activity.color }}"
+        value="{{ activity }}"/>
     </form>
   {% endfor %}
+  <button type="button" class="btn btn-outline-info mb-2" data-bs-toggle="modal" data-bs-target="#createActivityModal">
+    Quick Create Activity Type
+  </button>
+
 </div>
 
 <!-- Group by each date -->
@@ -128,80 +45,31 @@
 {% for sdate, activity_counts in cad_by_date.items %}
   <h3>{{ sdate }}</h3>
   {% for ac in activity_counts %}
-    <p>
+    <p class="m-2">
     <form action="/addTodo/" 
       style="display: inline;"
       method="post">{% csrf_token %}
       <input type="hidden" name="client_id" value="{{ ac.client }}" />
       <input type="hidden" name="activity_id" value="{{ ac.activity }}" />
-      <input class="btn btn-info" type="submit" value="Attempt again"/>
+      <input class="btn btn-info" type="submit" value="One more time for Cody!"/>
     </form>
-    <span class="fw-bold">{{ ac.activity_name }} </span> | <i>{{ac.client_display_name}}</i> 
-      | {{ ac.total_count }} attempts
+    <button class="btn m-2" 
+      type="button" 
+      style="background-color: {{ ac.activity_color }}"
+      value="{{ activity }}"
+    >
+      {{ ac.activity_name }}
+    </button>
+     <i>{{ac.client_display_name}}</i> 
+      | <span class="fw-bold">{{ ac.total_count }} attempts</span>
     </p>
   {% endfor %}
   <hr/>
 {% endfor %}
 </div>
 
-<!-- About Modal -->
-<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">About</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Cody is a great guy that you can count on.</p>
-        <p>People, animals, and governments count on Cody - and you can count on the Counter Cody</p>
-        <p></p>
-        <p>Made with <i class="bi bi-heart-fill"></i> by the Counter Cody team</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-          🇺🇸 😍
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Add Activity Modal -->
-<div class="modal fade" id="createActivityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New Activity Type</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/addActivity/" method="post">{% csrf_token %}
-          <div class="form-floating m-1">
-            <input class="form-control" id="activityName" type="text" name="name" placeholder="Running 10" required/>
-            <label for="activityName">Name, ex: "Running 10 (Required)"</label>
-          </div>
-
-          <div class="form-floating m-1">
-            <input class="form-control" id="activityDescription" type="text" name="description" placeholder="Running for 10 min"/>
-            <label for="activityDescription">Description, ex: "Running for 10 minutes"</label>
-          </div>
-
-          <div class="form-floating m-1">
-            <input class="form-control" id="activityYTurl" type="text" name="youtube_url" placeholder="YouTube link, ex: 'https://www.youtube.com/watch?v=dQw4w9wgXcQ'"/>
-            <label for="activityYTurl">YouTube URL, ex: "https://www.youtube.com/watch?v=*"</label>
-          </div>
-          <input class="btn btn-success m-1" type="submit" value="Create"/>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "modal.html" %}
 
 </body>
 </html>

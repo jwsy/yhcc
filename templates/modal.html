@@ -1,0 +1,104 @@
+<!-- About Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">About</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Cody is a great guy that you can count on.</p>
+        <p>People, animals, and governments count on Cody - and you can count on the Counter Cody</p>
+        <p></p>
+        <p>Made with <i class="bi bi-heart-fill"></i> by the Counter Cody team</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          🇺🇸 😍
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Activity Modal -->
+<div class="modal fade" id="createActivityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New Activity Type</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/addActivity/" method="post">{% csrf_token %}
+          <div class="form-floating m-1">
+            <input class="form-control" id="activityName" type="text" name="name" placeholder="Running 10" required/>
+            <label for="activityName">Name, ex: "Running 10 (Required)"</label>
+          </div>
+
+          <div class="form-floating m-1">
+            <input class="form-control" id="activityDescription" type="text" name="description" placeholder="Running for 10 min"/>
+            <label for="activityDescription">Description, ex: "Running for 10 minutes"</label>
+          </div>
+
+          <div class="form-floating m-1">
+            <input class="form-control" id="activityYTurl" type="text" name="youtube_url" placeholder="YouTube link, ex: 'https://www.youtube.com/watch?v=dQw4w9wgXcQ'"/>
+            <label for="activityYTurl">YouTube URL, ex: "https://www.youtube.com/watch?v=*"</label>
+          </div>
+
+          <div class="m-2">
+            <label class="m-2" for="favcolor">Select the Activity color:</label>
+            <input class="m-2" type="color" id="favcolor" name="favcolor" value="#17a2b8"><br><br>
+          </div>
+
+          <input class="btn btn-success m-1" type="submit" value="Create"/>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Random Modal -->
+<!-- show with 
+(new bootstrap.Modal(document.getElementById('randomModal'), {})).show();
+-->
+<script>
+    // JavaScript Code
+    // context = {{ all_random_giphy | safe}}
+    // console.log(context)
+</script>
+
+<div class="modal fade" id="randomModal" tabindex="-1" aria-labelledby="randomModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="randomModalh5">One more time for Cody!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+        {% with one_random_giphy as rg %}
+        <img 
+          style="max-width: 90%;"
+          src="{{ rg.url }}"
+        >
+          <!-- Aloha! in randomModal -->
+        <src>
+        {% endwith %}
+        <!-- <img 
+          style="max-width: 100%;"
+          src="https://media.giphy.com/media/qadvd1vBaZBBu/giphy.gif"/> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+          OK! 👍
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

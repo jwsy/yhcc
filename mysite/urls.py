@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from todo.views import homeView, addTodo, deleteTodo, doneTodo, coverImage, logout_request, register_request, selectClient, addActivity, streamView
+from todo.views import homeView, addTodo, deleteTodo, doneTodo, coverImage, logout_request, register_request, selectClient, addActivity, streamView, statsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),    
     path('', homeView, name='home'),
+    path('stats', statsView, name='stats'),
     path('stream', streamView),
     path('addTodo/', addTodo),
     path('addActivity/', addActivity),

@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand b mb-0 h2" href="#">Counter Cody</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">
+            Home
+            <i class="bi bi-house-fill"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/stream">
+            Stream
+            <i class="bi bi-file-earmark-bar-graph"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#aboutModal" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/stats">Stats</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">
+            Client: 
+            {{ selected_client.display_name }}
+            <i class="bi bi-heart"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% for client in clients %}
+            <li><a 
+              class="dropdown-item inactive" 
+              href="/selectClient/{{ client.id }}"
+              >{{ client.display_name }} {{ client.id }}
+            </a></li>
+            {% endfor %}
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/selectClient/0">Default</a></li>
+          </ul>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle active b" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">
+            Adult:
+            {{user.username}}
+            <i class="bi bi-person-badge"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li class="nav-item me-2">
+              <a class="nav-link" href="{% url "admin:auth_user_change"  user.id %}">
+                Edit {{user.username}} <i class="bi bi-person-circle"></i>
+              </a>
+            </li>
+
+            <li class="nav-item me-2">
+              <a class="nav-link" href="/admin">Admin</a>
+            </li>
+      
+            <li class="nav-item me-2">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </li>
+        {% else %}
+  
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+  
+        {% endif %}
+      </ul>
+
+      <button type="button" class="btn m-2" data-bs-toggle="modal" data-bs-target="#randomModal">😃</button>
+
+      <a type="button" class="btn btn-outline-secondary m-2"
+        href="{% url "admin:todo_activity_changelist" %}"
+      >
+        Edit Activity Types
+      </a>
+
+      <!-- <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
+    </div>
+  </div>
+</nav>
+<!-- END nav -->
