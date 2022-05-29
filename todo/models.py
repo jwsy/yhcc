@@ -19,6 +19,7 @@ class Client(models.Model):
     id = models.AutoField(primary_key=True)
     display_name = models.TextField(blank=True)
     full_name = models.TextField(blank=True)
+    favorite_food = models.TextField(blank=True)
     guardian_users = models.ManyToManyField(get_user_model(), blank=True)
 
     def __str__(self):

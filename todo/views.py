@@ -149,6 +149,9 @@ def statsView(request):
   all_activities = Activity.objects.all()
   resp_data['all_activities'] = all_activities
 
+  # DjangoJSONEncoder
+  print(resp_data)
+
   return render(
     request, 
     'stats.html',

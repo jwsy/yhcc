@@ -19,8 +19,10 @@
 <div class="container m-2 p-2 bg-white">
   <h4>Stats!</h5>
 
-  {% for activity in all_activities %}
-    <!-- Attempt activity again -->
+  {{ all_activities }}  
+
+  <!-- Attempt activity again -->
+  <!-- {% for activity in all_activities %}
     <form action="/addTodo/" 
       style="display: inline;"
       method="post">{% csrf_token %}
@@ -37,7 +39,7 @@
     data-bs-toggle="modal" 
     data-bs-target="#createActivityModal">
     Quick Create Activity Type
-  </button>
+  </button> -->
 
 </div>
 
